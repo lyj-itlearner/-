@@ -1,0 +1,41 @@
+#配置mysql
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/exercise?characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: root
+    #配置连接池类型
+    type: com.alibaba.druid.pool.DruidDataSource
+  #配置应用服务名称
+  application:
+    name: user-service
+
+#配置端口号
+server:
+  port: ${port:9091}
+
+#配置mybatis的信息
+mybatis:
+  #配置xml文件位置
+  mapper-locations: classpath:mapper/*.xml
+  #配置实体类前缀
+  type-aliases-package: com.itheima.userservice.entity
+
+
+#Eureka客户端注册配置
+eureka:
+  client:
+    service-url:
+      #注册中心的默认服务地址
+      defaultZone: http://127.0.0.1:10086/eureka
+  #服务的提供者配置项
+  instance:
+    #更倾向使用ip地址向外提供服务，而不是host名
+    prefer-ip-address: true
+    #指定的ip地址
+    ip-address: 127.0.0.1
+    #续约间隔，服务的提供者定时向Eureka-server提出续约
+    lease-renewal-interval-in-seconds: 30
+    #服务时效时间，如果在续约间隔时间到了服务并没有续约，那么Eureka-server会等待90秒，没有续约，则从服务列表中剔除
+    lease-expiration-duration-in-seconds: 90
